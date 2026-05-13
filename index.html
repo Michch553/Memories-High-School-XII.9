@@ -15,19 +15,26 @@
             background-attachment: fixed; color: #e6f1ff; overflow-x: hidden;
         }
 
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        .hero-scroll-hint {
+            margin-top: 20px; font-size: 0.9rem; color: var(--tosca);
+            font-style: italic; opacity: 0.8; animation: bounce 2s infinite;
+        }
+
         .gallery-container { 
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            width: 95%;
-            margin: 20px auto;
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 10px; width: 95%; margin: 20px auto;
         }
 
         @media (min-width: 768px) {
             .gallery-container { grid-template-columns: repeat(3, 1fr); gap: 20px; width: 90%; }
         }
 
-        /* BINGKAI FOTO BERVARIASI */
         .photo-card { background: var(--light-navy); overflow: hidden; border: 1px solid rgba(100, 255, 218, 0.2); transition: 0.3s; }
         .style-0 { border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .style-1 { border-radius: 25px; box-shadow: 0 0 15px rgba(100, 255, 218, 0.1); }
@@ -36,49 +43,18 @@
         .photo-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; cursor: pointer; display: block; }
         .photo-desc { padding: 8px; font-size: 0.75rem; color: var(--tosca); text-align: center; }
 
-        /* VIDEO SECTION IMPROVEMENTS */
         .video-wrapper {
-            width: 90%;
-            max-width: 500px; /* Batasi lebar agar tidak menuhin layar HP */
-            margin: 0 auto 50px auto;
-            background: var(--light-navy);
-            padding: 10px;
-            border-radius: 15px;
-            border: 1px solid rgba(100, 255, 218, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 90%; max-width: 500px; margin: 0 auto 50px auto;
+            background: var(--light-navy); padding: 10px; border-radius: 15px;
+            border: 1px solid rgba(100, 255, 218, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .video-label {
-            display: block;
-            font-weight: bold;
-            color: var(--tosca);
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-        }
+        .video-label { display: block; font-weight: bold; color: var(--tosca); margin-bottom: 10px; letter-spacing: 2px; font-size: 0.9rem; }
+        .v-player { width: 100%; border-radius: 10px; display: block; background: #000; }
 
-        .v-player {
-            width: 100%;
-            border-radius: 10px;
-            display: block;
-        }
-
-        .scroll-hint {
-            font-size: 0.7rem;
-            color: #8892b0;
-            margin-top: 8px;
-            font-style: italic;
-        }
-
-        .emoji-particle { position: fixed; pointer-events: none; z-index: 100000; animation: fallAnimation linear forwards; font-size: 32px; }
-        @keyframes fallAnimation {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-        }
-
-        #modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 10001; overflow: auto; touch-action: pinch-zoom; }
+        #modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 10001; overflow: auto; }
         .modal-content { display: flex; justify-content: center; align-items: center; min-height: 100%; width: 100%; }
-        #modalImg { max-width: 95%; height: auto; border-radius: 10px; transition: transform 0.2s ease-out; }
+        #modalImg { max-width: 95%; height: auto; border-radius: 10px; }
 
         .btn-close-x {
             position: fixed; top: 20px; right: 20px; width: 45px; height: 45px;
@@ -87,10 +63,10 @@
             font-size: 30px; font-weight: bold; cursor: pointer; z-index: 10002;
         }
 
-        .closing-message { max-width: 800px; margin: 80px auto; padding: 50px 30px; text-align: center; border-top: 1px solid var(--tosca); background: rgba(17, 34, 64, 0.8); backdrop-filter: blur(10px); border-radius: 20px; width: 85%; }
+        .closing-message { max-width: 800px; margin: 80px auto; padding: 50px 30px; text-align: center; border-top: 1px solid var(--tosca); background: rgba(17, 34, 64, 0.8); border-radius: 20px; width: 85%; }
         .branding-label { margin-top: 30px; font-size: 1rem; color: var(--tosca); letter-spacing: 4px; border: 1px solid var(--tosca); padding: 10px 20px; display: inline-block; border-radius: 5px; }
 
-        .music-btn { position: fixed; bottom: 20px; right: 20px; background: var(--tosca); color: var(--navy); width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .music-btn { position: fixed; bottom: 20px; right: 20px; background: var(--tosca); color: var(--navy); width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 1000; cursor: pointer; font-size: 20px; }
     </style>
 </head>
 <body>
@@ -100,7 +76,7 @@
     <button style="padding: 15px 40px; border: 2px solid var(--tosca); color: var(--tosca); background: transparent; cursor: pointer; border-radius: 50px; font-weight: bold;" onclick="startApp()">LIHAT FOTO 📸</button>
 </div>
 
-<audio id="bgm" loop><source src="musik.mp3" type="audio/mpeg"></audio>
+<audio id="bgm" loop preload="auto"><source src="musik.mp3" type="audio/mpeg"></audio>
 
 <div class="hero" style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
     <h1 data-aos="zoom-in">MEMORIES XI.9-XII.9</h1>
@@ -113,30 +89,9 @@
 <div class="video-section" style="margin: 100px 0; text-align: center;">
     <h2 style="color: var(--tosca); margin-bottom: 50px;" data-aos="fade-up">CINEMATIC MOMENTS 🎬</h2>
     
-    <div class="video-wrapper" data-aos="fade-up">
-        <span class="video-label">MOMENT 1</span>
-        <video class="v-player" controls poster="sampul_video1.jpg"><source src="video1.mp4"></video>
-    </div>
-
-    <div class="video-wrapper" data-aos="fade-up">
-        <span class="video-label">MOMENT 2</span>
-        <video class="v-player" controls poster="sampul_video2.jpg"><source src="video2.mp4"></video>
-    </div>
-
-    <div class="video-wrapper" data-aos="fade-up">
-        <span class="video-label">MOMENT 3</span>
-        <video class="v-player" controls poster="sampul_video3.jpg"><source src="video3.mp4"></video>
-    </div>
-
-    <div class="video-wrapper" data-aos="fade-up">
-        <span class="video-label">MOMENT 4</span>
-        <video class="v-player" controls poster="sampul_video4.jpg"><source src="video4.mp4"></video>
-    </div>
-
-    <div class="video-wrapper" data-aos="fade-up">
-        <span class="video-label">MOMENT 5</span>
-        <video class="v-player" controls poster="sampul_video5.jpg"><source src="video5.mp4"></video>
-    </div>
+    <div class="video-wrapper" data-aos="fade-up"><span class="video-label">MOMENT 1</span><video class="v-player" controls poster="sampul_video1.jpg"><source src="video1.mp4"></video></div>
+    <div class="video-wrapper" data-aos="fade-up"><span class="video-label">MOMENT 2</span><video class="v-player" controls poster="sampul_video2.jpg"><source src="video2.mp4"></video></div>
+    <div class="video-wrapper" data-aos="fade-up"><span class="video-label">MOMENT 3</span><video class="v-player" controls poster="sampul_video3.jpg"><source src="video3.mp4"></video></div>
 </div>
 
 <div class="closing-message" id="footer-msg" data-aos="fade-up">
@@ -149,9 +104,7 @@
 
 <div id="modal">
     <div class="btn-close-x" onclick="closeModal()">×</div>
-    <div class="modal-content" onclick="closeModal()">
-        <img id="modalImg" onclick="event.stopPropagation()">
-    </div>
+    <div class="modal-content" onclick="closeModal()"><img id="modalImg"></div>
 </div>
 
 <div class="music-btn" id="playBtn">⏸</div>
@@ -159,13 +112,15 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     const totalFotos = 154;
-    const emojis = ["✨", "🎓", "💙", "🔥", "🌟", "📸", "🤟", "😎", "🍿", "🥂"];
-    const quotes = ["Vibesnya emang beda sendiri 🔥💯", "Core memory unlocked! 🔓✨", "Real no counter ini 🤟💀", "masa indah 🎓💙", "Very demure, very mindful ✨", "Miss these moments 📸", "Sheeshh 💊🔥", "Lit all day everyday 👑✨", "Lagi asek 🥂🌟", "Legacy we built together 🏛️💙"];
+    const quotes = ["Vibesnya emang beda 🔥", "Core memory! ✨", "Real no counter 🤟", "Masa indah 🎓💙", "Very demure ✨", "Miss ini 📸", "Lit all day 👑", "Lagi asek 🥂"];
 
     AOS.init({ duration: 800, once: true });
 
+    const bgm = document.getElementById('bgm');
+    const playBtn = document.getElementById('playBtn');
+
     function startApp() {
-        document.getElementById('bgm').play();
+        bgm.play().catch(e => console.log("Audio block"));
         document.getElementById('welcome-overlay').style.display = 'none';
         document.body.style.overflow = 'auto';
     }
@@ -173,50 +128,25 @@
     const container = document.getElementById('gallery');
     for (let i = 1; i <= totalFotos; i++) {
         const card = document.createElement('div');
-        const styleIndex = i % 3;
-        card.className = `photo-card style-${styleIndex}`;
+        card.className = `photo-card style-${i % 3}`;
         card.setAttribute('data-aos', 'fade-up');
-        const q = quotes[Math.floor(Math.random() * quotes.length)];
-        card.innerHTML = `<img src="foto${i}.jpg" loading="lazy" onerror="this.closest('.photo-card').remove()" onclick="handlePhotoClick(event, this.src)"><div class="photo-desc">${q}</div>`;
+        card.innerHTML = `<img src="foto${i}.jpg" loading="lazy" onerror="this.parentElement.style.display='none'" onclick="openModal(this.src)"><div class="photo-desc">${quotes[i % quotes.length]}</div>`;
         container.appendChild(card);
     }
 
-    const bgm = document.getElementById('bgm');
     const videos = document.querySelectorAll('.v-player');
-    const playBtn = document.getElementById('playBtn');
-
     videos.forEach(v => {
-        v.addEventListener('play', () => {
-            bgm.pause();
-            playBtn.innerText = "🎵";
-        });
-        v.addEventListener('ended', () => {
-            bgm.play();
-            playBtn.innerText = "⏸";
-        });
-        v.addEventListener('pause', () => {
-            bgm.play();
-            playBtn.innerText = "⏸";
-        });
+        v.addEventListener('play', () => { bgm.pause(); playBtn.innerText = "🎵"; });
+        v.addEventListener('ended', () => { bgm.play(); playBtn.innerText = "⏸"; });
+        v.addEventListener('pause', () => { bgm.play(); playBtn.innerText = "⏸"; });
     });
 
-    function handlePhotoClick(event, src) {
-        for(let i=0; i<12; i++) {
-            const p = document.createElement("div");
-            p.className = "emoji-particle";
-            p.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            p.style.left = Math.random() * 100 + "vw";
-            p.style.animationDuration = (Math.random() * 2 + 1) + "s";
-            document.body.appendChild(p);
-            setTimeout(() => p.remove(), 3000);
-        }
+    function openModal(src) {
         document.getElementById('modalImg').src = src;
         document.getElementById('modal').style.display = 'block';
     }
 
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-    }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
     playBtn.onclick = function() {
         if (bgm.paused) { bgm.play(); this.innerText = "⏸"; }
