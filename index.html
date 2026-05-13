@@ -3,40 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>LYVORA - Memories XII.9</title>
+    <title>FAMOSELNINE-LYVORA - Memories XII.9</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root { --navy: #0a192f; --light-navy: #112240; --tosca: #64ffda; }
         
         body {
             font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--navy);
-            /* FIX BACKGROUND HP: Menggunakan contain agar foto background tidak terpotong parah */
             background-image: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), url('foto70.jpg');
             background-repeat: no-repeat; background-position: center 20%; background-size: cover;
             background-attachment: fixed; color: #e6f1ff; overflow-x: hidden;
         }
 
-        /* FIX SCROLL PATAH-PATAH: Menambahkan smooth scroll */
-        html { scroll-behavior: smooth; }
-
+        /* GALLERY 2 KOLOM DI HP - BIAR GAK 1 PER 1 */
         .gallery-container { 
-            column-count: 3; column-gap: 15px; width: 92%; max-width: 1200px; margin: 30px auto; 
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Maksa 2 kolom di HP */
+            gap: 10px;
+            width: 95%;
+            margin: 20px auto;
         }
-        
+
+        @media (min-width: 768px) {
+            .gallery-container { grid-template-columns: repeat(3, 1fr); gap: 20px; width: 90%; }
+        }
+
         .photo-card { 
-            break-inside: avoid; margin-bottom: 15px; background: var(--light-navy); 
-            border-radius: 12px; overflow: hidden; border: 1px solid rgba(100, 255, 218, 0.2); 
-            transition: transform 0.3s ease; 
+            background: var(--light-navy); border-radius: 10px; overflow: hidden; 
+            border: 1px solid rgba(100, 255, 218, 0.1); transition: 0.3s;
         }
+        .photo-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; cursor: pointer; display: block; }
+        .photo-desc { padding: 8px; font-size: 0.75rem; color: var(--tosca); text-align: center; }
 
-        .photo-card img { width: 100%; height: auto; display: block; cursor: pointer; transition: 0.5s; }
-        .photo-desc { padding: 10px; font-size: 0.8rem; color: var(--tosca); text-align: center; line-height: 1.4; }
-
-        /* VIDEO FIX */
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 90%; max-width: 1200px; margin: 0 auto; }
-        video { width: 100%; height: auto; border-radius: 8px; background: #000; object-fit: contain; max-height: 500px; }
-
-        /* EMOJI FALLING */
+        /* EMOJI FALLING - FIXED POSITION */
         .emoji-particle { position: fixed; pointer-events: none; z-index: 100000; animation: fallAnimation linear forwards; font-size: 32px; }
         @keyframes fallAnimation {
             0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
@@ -44,54 +43,38 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* MODAL & ZOOM */
-        #modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(10, 25, 47, 0.98); z-index: 10001; overflow: auto; touch-action: pinch-zoom; }
+        /* MODAL & MANUAL ZOOM */
+        #modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 10001; overflow: auto; touch-action: pinch-zoom; }
         .modal-content { display: flex; justify-content: center; align-items: center; min-height: 100%; width: 100%; }
         #modalImg { max-width: 95%; height: auto; border-radius: 10px; transition: transform 0.2s ease-out; }
 
         .closing-message { max-width: 800px; margin: 80px auto; padding: 50px 30px; text-align: center; border-top: 1px solid var(--tosca); background: rgba(17, 34, 64, 0.8); backdrop-filter: blur(10px); border-radius: 20px; width: 85%; }
-        .branding-label { margin-top: 30px; font-size: 0.9rem; color: var(--tosca); letter-spacing: 3px; border: 1px solid var(--tosca); padding: 8px 15px; display: inline-block; border-radius: 5px; }
+        .branding-label { margin-top: 30px; font-size: 1rem; color: var(--tosca); letter-spacing: 4px; border: 1px solid var(--tosca); padding: 10px 20px; display: inline-block; border-radius: 5px; }
 
-        .music-btn { position: fixed; bottom: 20px; right: 20px; background: var(--tosca); color: var(--navy); width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1000; box-shadow: 0 0 15px rgba(100, 255, 218, 0.5); }
-
-        /* RESPONSIVE HP: Biar gak muncul 1 per 1 kegedean */
-        @media (max-width: 768px) { 
-            .gallery-container { column-count: 2; column-gap: 10px; width: 95%; } 
-            h1 { font-size: 2.2rem; }
-        }
-        @media (max-width: 480px) { 
-            /* Kalau mau tetap 2 kolom di HP kecil biar gak scroll kepanjangan */
-            .gallery-container { column-count: 2; } 
-            .photo-desc { font-size: 0.7rem; padding: 6px; }
-        }
+        .music-btn { position: fixed; bottom: 20px; right: 20px; background: var(--tosca); color: var(--navy); width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 1000; }
     </style>
 </head>
 <body>
 
 <div id="welcome-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--navy); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-    <h2 style="color: var(--tosca); letter-spacing: 5px; font-size: 2.5rem;">LYVORA</h2>
-    <button style="padding: 12px 35px; border: 2px solid var(--tosca); color: var(--tosca); background: transparent; cursor: pointer; border-radius: 50px; font-weight: bold; text-transform: uppercase;" onclick="startApp()">START ✨</button>
+    <h2 style="color: var(--tosca); letter-spacing: 5px; font-size: 3rem;">🎓FAMOSELNINE-LYVORA💙</h2>
+    <button style="padding: 15px 40px; border: 2px solid var(--tosca); color: var(--tosca); background: transparent; cursor: pointer; border-radius: 50px; font-weight: bold;" onclick="startApp()">LIHAT FOTO 📸</button>
 </div>
 
 <audio id="bgm" loop><source src="musik.mp3" type="audio/mpeg"></audio>
 
-<div class="hero" style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px;">
+<div class="hero" style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
     <h1 data-aos="zoom-in">MEMORIES XI.9-XII.9</h1>
     <p data-aos="fade-up">SMAN 18 Makassar 🎓</p>
 </div>
 
 <div class="gallery-container" id="gallery"></div>
 
-<div class="video-section" style="margin: 80px 0; text-align: center;">
-    <h2 style="color: var(--tosca); margin-bottom: 30px;">CINEMATIC MOMENTS 🎬</h2>
-    <div class="video-grid">
-        <div class="video-card"><video controls onplay="manageAudio('play')" onpause="manageAudio('stop')" onended="manageAudio('stop')"><source src="video1.mp4"></video><p>MOMENT 01</p></div>
-        <div class="video-card"><video controls onplay="manageAudio('play')" onpause="manageAudio('stop')" onended="manageAudio('stop')"><source src="video2.mp4"></video><p>MOMENT 02</p></div>
-        <div class="video-card"><video controls onplay="manageAudio('play')" onpause="manageAudio('stop')" onended="manageAudio('stop')"><source src="video3.mp4"></video><p>MOMENT 03</p></div>
-        <div class="video-card"><video controls onplay="manageAudio('play')" onpause="manageAudio('stop')" onended="manageAudio('stop')"><source src="video4.mp4"></video><p>MOMENT 04</p></div>
-        <div class="video-card"><video controls onplay="manageAudio('play')" onpause="manageAudio('stop')" onended="manageAudio('stop')"><source src="video5.mp4"></video><p>MOMENT 05</p></div>
+<div class="video-section" style="margin: 100px 0; text-align: center;">
+    <h2 style="color: var(--tosca); margin-bottom: 40px;">CINEMATIC MOMENTS 🎬</h2>
+    <video controls style="width: 100%; max-height: 500px;"><source src="video1.mp4"></video>
+    <video controls style="width: 100%; max-height: 500px; margin-top: 20px;"><source src="video2.mp4"></video>
     </div>
-</div>
 
 <div class="closing-message" id="footer-msg" data-aos="fade-up">
     <h2>THE LAST CHAPTER</h2>
@@ -114,8 +97,8 @@
     const totalFotos = 154;
     const emojis = ["✨", "🎓", "💙", "🔥", "🌟", "📸", "🤟", "😎", "🍿", "🥂"];
     const quotes = [
-        "Vibesnya emang beda sendiri 🔥💯", "Core memory unlocked! 🔓✨", "Real no counter ini 🤟💀", "Definisi masa paling indah 🎓💙", 
-        "Very demure, very mindful 💅✨", "Miss these moments 📸", "Gak ada obat emang 💊🔥", "Lit all day everyday 👑✨",
+        "Vibesnya emang beda sendiri 🔥💯", "Core memory unlocked! 🔓✨", "Real no counter ini 🤟💀", "Masa paling indah 🎓💙", 
+        "Very demure, very mindful 💅✨", "Miss these moments 📸", "Gak ada obat 💊🔥", "Lit all day everyday 👑✨",
         "Lagi asik-asiknya 🥂🌟", "Legacy we built together 🏛️💙", "Main character energy ⚡😎", "High school peak moment 🎓💯",
         "Menolak lupa hari ini 📅✨", "Stay gold, stay bold 🌟💪", "Vibesnya mahal banget 💎🔥", "The dream team! 🤝🏆",
         "Momen langka nih 📸", "Tidak kerasa udah lewat aja ⏳", "Seru sumpah! 🗣️🔥", "Memories to keep forever 🔒💙"
@@ -135,11 +118,12 @@
         card.className = 'photo-card';
         card.setAttribute('data-aos', 'fade-up');
         const q = quotes[Math.floor(Math.random() * quotes.length)];
-        card.innerHTML = `<img src="foto${i}.jpg" onerror="this.closest('.photo-card').remove()" onclick="handlePhotoClick(event, this.src)"><div class="photo-desc">${q}</div>`;
+        card.innerHTML = `<img src="foto${i}.jpg" loading="lazy" onerror="this.closest('.photo-card').remove()" onclick="handlePhotoClick(event, this.src)"><div class="photo-desc">${q}</div>`;
         container.appendChild(card);
     }
 
     function handlePhotoClick(event, src) {
+        // Triger Emoji
         for(let i=0; i<12; i++) {
             const p = document.createElement("div");
             p.className = "emoji-particle";
@@ -167,12 +151,6 @@
     function closeModal() {
         document.getElementById('modal').style.display = 'none';
         scale = 1;
-    }
-
-    function manageAudio(action) {
-        const bgm = document.getElementById('bgm');
-        if(action === 'play') bgm.pause();
-        else bgm.play();
     }
 
     document.getElementById('playBtn').onclick = function() {
