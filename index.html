@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>FAMOSELNINE-LYVORA - Memories XII.9</title>
+    <title>LYVORA - Memories XII.9</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root { --navy: #0a192f; --light-navy: #112240; --tosca: #64ffda; }
@@ -15,10 +15,9 @@
             background-attachment: fixed; color: #e6f1ff; overflow-x: hidden;
         }
 
-        /* GALLERY 2 KOLOM DI HP - BIAR GAK 1 PER 1 */
         .gallery-container { 
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Maksa 2 kolom di HP */
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             width: 95%;
             margin: 20px auto;
@@ -28,25 +27,31 @@
             .gallery-container { grid-template-columns: repeat(3, 1fr); gap: 20px; width: 90%; }
         }
 
-        .photo-card { 
-            background: var(--light-navy); border-radius: 10px; overflow: hidden; 
-            border: 1px solid rgba(100, 255, 218, 0.1); transition: 0.3s;
-        }
+        /* BINGKAI FOTO BERVARIASI */
+        .photo-card { background: var(--light-navy); overflow: hidden; border: 1px solid rgba(100, 255, 218, 0.2); transition: 0.3s; }
+        .style-0 { border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .style-1 { border-radius: 25px; box-shadow: 0 0 15px rgba(100, 255, 218, 0.1); }
+        .style-2 { border-radius: 15px; border-bottom: 3px solid var(--tosca); }
+
         .photo-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; cursor: pointer; display: block; }
         .photo-desc { padding: 8px; font-size: 0.75rem; color: var(--tosca); text-align: center; }
 
-        /* EMOJI FALLING - FIXED POSITION */
         .emoji-particle { position: fixed; pointer-events: none; z-index: 100000; animation: fallAnimation linear forwards; font-size: 32px; }
         @keyframes fallAnimation {
             0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* MODAL & MANUAL ZOOM */
         #modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 10001; overflow: auto; touch-action: pinch-zoom; }
         .modal-content { display: flex; justify-content: center; align-items: center; min-height: 100%; width: 100%; }
         #modalImg { max-width: 95%; height: auto; border-radius: 10px; transition: transform 0.2s ease-out; }
+
+        .btn-close-x {
+            position: fixed; top: 20px; right: 20px; width: 45px; height: 45px;
+            background: var(--tosca); color: var(--navy); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 30px; font-weight: bold; cursor: pointer; z-index: 10002;
+        }
 
         .closing-message { max-width: 800px; margin: 80px auto; padding: 50px 30px; text-align: center; border-top: 1px solid var(--tosca); background: rgba(17, 34, 64, 0.8); backdrop-filter: blur(10px); border-radius: 20px; width: 85%; }
         .branding-label { margin-top: 30px; font-size: 1rem; color: var(--tosca); letter-spacing: 4px; border: 1px solid var(--tosca); padding: 10px 20px; display: inline-block; border-radius: 5px; }
@@ -57,7 +62,7 @@
 <body>
 
 <div id="welcome-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--navy); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-    <h2 style="color: var(--tosca); letter-spacing: 5px; font-size: 3rem;">🎓FAMOSELNINE-LYVORA💙</h2>
+    <h2 style="color: var(--tosca); letter-spacing: 5px; font-size: 3rem;">🎓XI.9-XII.9💙</h2>
     <button style="padding: 15px 40px; border: 2px solid var(--tosca); color: var(--tosca); background: transparent; cursor: pointer; border-radius: 50px; font-weight: bold;" onclick="startApp()">LIHAT FOTO 📸</button>
 </div>
 
@@ -72,20 +77,24 @@
 
 <div class="video-section" style="margin: 100px 0; text-align: center;">
     <h2 style="color: var(--tosca); margin-bottom: 40px;">CINEMATIC MOMENTS 🎬</h2>
-    <video controls style="width: 100%; max-height: 500px;"><source src="video1.mp4"></video>
-    <video controls style="width: 100%; max-height: 500px; margin-top: 20px;"><source src="video2.mp4"></video>
-    </div>
+    <video class="v-player" controls style="width: 100%; margin-bottom: 20px;"><source src="video1.mp4"></video>
+    <video class="v-player" controls style="width: 100%; margin-bottom: 20px;"><source src="video2.mp4"></video>
+    <video class="v-player" controls style="width: 100%; margin-bottom: 20px;"><source src="video3.mp4"></video>
+    <video class="v-player" controls style="width: 100%; margin-bottom: 20px;"><source src="video4.mp4"></video>
+    <video class="v-player" controls style="width: 100%; margin-bottom: 20px;"><source src="video5.mp4"></video>
+</div>
 
 <div class="closing-message" id="footer-msg" data-aos="fade-up">
-    <h2>THE LAST CHAPTER</h2>
+    <h2>THE LAST CHAPTER 💙</h2>
     <p>Berawal dari orang asing, berakhir jadi <strong>core memory</strong>. Terima kasih semuanya sudah mengisi momen-momen ini selama dua tahun di sekolah kita SMAN 18 Makassar.</p>
     <p>Semua cerita di kelas, kantin, sampai lelahnya ujian dan hafalan bakal jadi bagian yang takkan terganti. Thanks for being part of this crazy journey.</p>
     <p>Sukses buat kedepannya, kejar mimpi masing-masing. Jangan lupa ingat momen-momen ini. See you guys at the top, and <strong>GODSPEED Y'ALL!</strong></p>
     <div class="branding-label">FAMOSELNINE-LYVORA</div>
 </div>
 
-<div id="modal" onclick="closeModal()">
-    <div class="modal-content">
+<div id="modal">
+    <div class="btn-close-x" onclick="closeModal()">×</div>
+    <div class="modal-content" onclick="closeModal()">
         <img id="modalImg" onclick="event.stopPropagation()">
     </div>
 </div>
@@ -96,13 +105,7 @@
 <script>
     const totalFotos = 154;
     const emojis = ["✨", "🎓", "💙", "🔥", "🌟", "📸", "🤟", "😎", "🍿", "🥂"];
-    const quotes = [
-        "Vibesnya emang beda sendiri 🔥💯", "Core memory unlocked! 🔓✨", "Real no counter ini 🤟💀", "Masa paling indah 🎓💙", 
-        "Very demure, very mindful 💅✨", "Miss these moments 📸", "Gak ada obat 💊🔥", "Lit all day everyday 👑✨",
-        "Lagi asik-asiknya 🥂🌟", "Legacy we built together 🏛️💙", "Main character energy ⚡😎", "High school peak moment 🎓💯",
-        "Menolak lupa hari ini 📅✨", "Stay gold, stay bold 🌟💪", "Vibesnya mahal banget 💎🔥", "The dream team! 🤝🏆",
-        "Momen langka nih 📸", "Tidak kerasa udah lewat aja ⏳", "Seru sumpah! 🗣️🔥", "Memories to keep forever 🔒💙"
-    ];
+    const quotes = ["Vibesnya emang beda sendiri 🔥💯", "Core memory unlocked! 🔓✨", "Real no counter ini 🤟💀", "Definisi masa paling indah 🎓💙", "Very demure, very mindful ✨", "Miss these moments 📸", "Sheeshh 💊🔥", "Lit all day everyday 👑✨", "Lagi asek 🥂🌟", "Legacy we built together 🏛️💙"];
 
     AOS.init({ duration: 800, once: true });
 
@@ -115,15 +118,37 @@
     const container = document.getElementById('gallery');
     for (let i = 1; i <= totalFotos; i++) {
         const card = document.createElement('div');
-        card.className = 'photo-card';
+        const styleIndex = i % 3;
+        card.className = `photo-card style-${styleIndex}`;
         card.setAttribute('data-aos', 'fade-up');
         const q = quotes[Math.floor(Math.random() * quotes.length)];
         card.innerHTML = `<img src="foto${i}.jpg" loading="lazy" onerror="this.closest('.photo-card').remove()" onclick="handlePhotoClick(event, this.src)"><div class="photo-desc">${q}</div>`;
         container.appendChild(card);
     }
 
+    const bgm = document.getElementById('bgm');
+    const videos = document.querySelectorAll('.v-player');
+    const playBtn = document.getElementById('playBtn');
+
+    videos.forEach(v => {
+        // Pas video mulai, musik stop
+        v.addEventListener('play', () => {
+            bgm.pause();
+            playBtn.innerText = "🎵";
+        });
+        // Pas video selesai, musik nyala lagi
+        v.addEventListener('ended', () => {
+            bgm.play();
+            playBtn.innerText = "⏸";
+        });
+        // Pas video di-pause manual, musik nyala lagi
+        v.addEventListener('pause', () => {
+            bgm.play();
+            playBtn.innerText = "⏸";
+        });
+    });
+
     function handlePhotoClick(event, src) {
-        // Triger Emoji
         for(let i=0; i<12; i++) {
             const p = document.createElement("div");
             p.className = "emoji-particle";
@@ -133,28 +158,15 @@
             document.body.appendChild(p);
             setTimeout(() => p.remove(), 3000);
         }
-        const modal = document.getElementById('modal');
-        const modalImg = document.getElementById('modalImg');
-        modalImg.src = src;
-        modalImg.style.transform = "scale(1)";
-        modal.style.display = 'block';
+        document.getElementById('modalImg').src = src;
+        document.getElementById('modal').style.display = 'block';
     }
-
-    let scale = 1;
-    document.getElementById('modal').addEventListener('wheel', (e) => {
-        e.preventDefault();
-        scale += e.deltaY * -0.001;
-        scale = Math.min(Math.max(1, scale), 4);
-        document.getElementById('modalImg').style.transform = `scale(${scale})`;
-    }, {passive: false});
 
     function closeModal() {
         document.getElementById('modal').style.display = 'none';
-        scale = 1;
     }
 
-    document.getElementById('playBtn').onclick = function() {
-        const bgm = document.getElementById('bgm');
+    playBtn.onclick = function() {
         if (bgm.paused) { bgm.play(); this.innerText = "⏸"; }
         else { bgm.pause(); this.innerText = "🎵"; }
     };
